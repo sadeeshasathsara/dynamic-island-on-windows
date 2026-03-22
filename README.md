@@ -29,7 +29,7 @@ A sleek, iOS-inspired Dynamic Island notification overlay for Windows 11. Replac
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/dynamic-island-windows.git
+git clone https://github.com/sadeeshasathsara/dynamic-island-windows.git
 cd dynamic-island-windows
 
 # Build
