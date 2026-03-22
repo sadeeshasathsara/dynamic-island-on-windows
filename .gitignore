@@ -25,3 +25,4 @@ publish/
 release/
 *.exe
 *.pdb
+*.zip

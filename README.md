@@ -6,24 +6,24 @@ A sleek, iOS-inspired Dynamic Island notification overlay for Windows 11. Replac
 ![.NET 8](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
-## ✨ Features
+## Features
 
-- 🎯 **Dynamic Island Pill** — Animated notification overlay at the top-center of your screen
-- 🎬 **iOS-style Animations** — Drop-down bounce, horizontal expand, slide-up exit
-- 🖱️ **Interactive Hover Actions** — Hover to reveal Mute and Clear buttons
-- 🔇 **Native Toast Suppression** — Automatically hides Windows default notifications
-- 👆 **Click to Open** — Click the notification to launch the source app
-- 🎨 **Deterministic Accent Colors** — Each app gets a unique, consistent avatar color
-- 🔄 **Always on Top** — Works over fullscreen apps and games
-- 📌 **System Tray** — Runs silently in the background with tray icon controls
+- **Dynamic Island Pill** — Animated notification overlay at the top-center of your screen
+- **iOS-style Animations** — Drop-down bounce, horizontal expand, slide-up exit
+- **Interactive Hover Actions** — Hover to reveal Mute and Clear buttons
+- **Native Toast Suppression** — Automatically hides Windows default notifications
+- **Click to Open** — Click the notification to launch the source app
+- **Deterministic Accent Colors** — Each app gets a unique, consistent avatar color
+- **Always on Top** — Works over fullscreen apps and games
+- **System Tray** — Runs silently in the background with tray icon controls
 
-## 📋 Prerequisites
+## Prerequisites
 
 - **Windows 11** (build 22621 or later)
 - [**.NET 8 SDK**](https://dotnet.microsoft.com/download/dotnet/8.0)
 - **Notification Access** — The app will request permission on first launch
 
-## 🚀 Getting Started
+## Getting Started
 
 ```bash
 # Clone the repository
@@ -42,7 +42,7 @@ On first launch, Windows will ask you to grant notification listener access. Go 
 
 > **Tip:** Enable **Do Not Disturb** in Windows to fully suppress native toast banners while the Dynamic Island handles everything.
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 ├── Core/
@@ -65,10 +65,10 @@ On first launch, Windows will ask you to grant notification listener access. Go 
 | **Services** | Notification listening, toast suppression — zero UI dependencies |
 | **UI** | Animation engine, overlay window — depends on Core only |
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License — see [LICENSE](LICENSE) for details.
