@@ -19,3 +19,9 @@ Desktop.ini
 build_errors.txt
 test_notif.cs
 *.log
+
+# Publish
+publish/
+release/
+*.exe
+*.pdb
