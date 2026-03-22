@@ -6,6 +6,8 @@ A sleek, iOS-inspired Dynamic Island notification overlay for Windows 11. Replac
 ![.NET 8](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
+![DIN](https://github.com/user-attachments/assets/59539079-a559-4a2a-a816-9133f4aefe4c)
+
 ## Features
 
 - **Dynamic Island Pill** — Animated notification overlay at the top-center of your screen
