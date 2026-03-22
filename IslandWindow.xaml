@@ -1,0 +1,159 @@
+<Window x:Class="DynamicIslandNotifier.IslandWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="DynamicIsland"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        Topmost="True"
+        ShowInTaskbar="False"
+        ResizeMode="NoResize"
+        Width="560"
+        Height="150">
+
+    <Window.Resources>
+        <Style x:Key="IslandButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#AAFFFFFF"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Padding" Value="10,6"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="12">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#22FFFFFF"/>
+                                <Setter Property="Foreground" Value="#FFFFFFFF"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#33FFFFFF"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <!-- Full-window transparent canvas so shadow area doesn't clip -->
+    <Grid>
+
+        <!-- THE PILL — starts as a 50x50 circle off-screen, drops down, then expands -->
+        <Border x:Name="PillBorder"
+                Background="#000000"
+                CornerRadius="32"
+                ClipToBounds="True"
+                Width="64"
+                Height="64"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Margin="0,8,0,0"
+                MouseEnter="PillBorder_MouseEnter"
+                MouseLeave="PillBorder_MouseLeave"
+                MouseLeftButtonUp="PillBorder_MouseLeftButtonUp">
+            
+            <Border.RenderTransform>
+                <TranslateTransform x:Name="PillTransform" Y="-150"/>
+            </Border.RenderTransform>
+
+            <Grid>
+                <!-- ── AVATAR (Visible immediately during drop down) ── -->
+                <Border x:Name="AvatarBorder"
+                        HorizontalAlignment="Left"
+                        Width="52" Height="52"
+                        CornerRadius="26"
+                        ClipToBounds="True"
+                        Margin="6,0,0,0"
+                        VerticalAlignment="Center">
+                    <Grid>
+                        <Border x:Name="AvatarFallback" CornerRadius="26">
+                            <TextBlock x:Name="AvatarInitial"
+                                       Foreground="White"
+                                       FontSize="24"
+                                       FontWeight="Bold"
+                                       FontFamily="Segoe UI"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+                        <Image x:Name="AppIcon"
+                               Stretch="UniformToFill"
+                               RenderOptions.BitmapScalingMode="HighQuality"
+                               Visibility="Collapsed"/>
+                    </Grid>
+                </Border>
+
+                <!-- ── TEXT CONTENT (Fades in after pill expands) ── -->
+                <Grid x:Name="ContentRoot"
+                      Opacity="0"
+                      Margin="68,0,0,0"
+                      VerticalAlignment="Stretch">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>       <!-- text   -->
+                        <ColumnDefinition Width="Auto"/>   <!-- time   -->
+                    </Grid.ColumnDefinitions>
+
+                <!-- ── TEXT ──────────────────────────────── -->
+                <StackPanel Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Margin="0,14,8,14">
+
+                    <TextBlock x:Name="TitleText"
+                               Foreground="White"
+                               FontSize="16"
+                               FontWeight="SemiBold"
+                               FontFamily="Segoe UI"
+                               TextTrimming="CharacterEllipsis"/>
+
+                    <TextBlock x:Name="BodyText"
+                               Foreground="#AAFFFFFF"
+                               FontSize="12.5"
+                               FontFamily="Segoe UI"
+                               TextTrimming="CharacterEllipsis"
+                               Margin="0,3,0,0"
+                               Visibility="Collapsed"/>
+                </StackPanel>
+
+                <!-- ── TIMESTAMP ─────────────────────────── -->
+                <TextBlock Grid.Column="1"
+                           x:Name="TimeText"
+                           Text="now"
+                           Foreground="#5FFFFFFF"
+                           FontSize="12"
+                           FontFamily="Segoe UI"
+                           VerticalAlignment="Center"
+                           Margin="0,0,16,0"/>
+                </Grid>
+
+                <!-- ── HOVER ACTIONS (Fades in on mouse over) ── -->
+                <Grid x:Name="HoverActionsPanel"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Bottom"
+                      Margin="64,0,12,10"
+                      Opacity="0"
+                      Visibility="Collapsed">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="8"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" x:Name="MuteBtn" Click="MuteBtn_Click" Style="{StaticResource IslandButtonStyle}" HorizontalAlignment="Stretch">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <TextBlock Text="&#xE7BA;" FontFamily="Segoe Fluent Icons" FontSize="16" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="Mute" FontFamily="Segoe UI" FontSize="12.5" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Grid.Column="2" x:Name="ClearBtn" Click="ClearBtn_Click" Style="{StaticResource IslandButtonStyle}" HorizontalAlignment="Stretch">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <TextBlock Text="&#xE711;" FontFamily="Segoe Fluent Icons" FontSize="16" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="Clear" FontFamily="Segoe UI" FontSize="12.5" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
